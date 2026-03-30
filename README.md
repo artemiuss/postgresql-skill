@@ -22,45 +22,9 @@ The repository now covers:
 
 ## Installation
 
-Install the whole repository as a skill directory named `postgresql-skill`.
-
-### Codex
-
-Install into `$CODEX_HOME/skills` (default: `~/.codex/skills`):
-
 ```bash
-mkdir -p ~/.codex/skills
-git clone https://github.com/artemiuss/postgresql-skill.git ~/.codex/skills/postgresql-skill
+npx skills add artemiuss/postgresql-skill
 ```
-
-If you already cloned this repository elsewhere:
-
-```bash
-mkdir -p ~/.codex/skills
-ln -s /absolute/path/to/postgresql-skill ~/.codex/skills/postgresql-skill
-```
-
-Restart Codex after installation so it reloads available skills.
-
-### Claude Code
-
-Project-local installation:
-
-```bash
-mkdir -p .claude/skills
-git clone https://github.com/artemiuss/postgresql-skill.git .claude/skills/postgresql-skill
-```
-
-Personal installation:
-
-```bash
-mkdir -p ~/.claude/skills
-git clone https://github.com/artemiuss/postgresql-skill.git ~/.claude/skills/postgresql-skill
-```
-
-If the repository is already checked out elsewhere, copy or symlink that directory into `.claude/skills/postgresql-skill` or `~/.claude/skills/postgresql-skill`.
-
-Start a new Claude Code session after installation.
 
 ## Sources
 
