@@ -32,7 +32,7 @@ npx skills add artemiuss/postgresql-skill
 
 Primary source:
 
-https://github.com/artemiuss/postgresql-best-practices
+https://github.com/wimolivier/postgresql-best-practices
 
 Taken from the base repository:
 
