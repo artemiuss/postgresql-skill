@@ -4,9 +4,8 @@
 -- Tests for migration system installation and schema structure.
 -- ============================================================================
 
--- Ensure migration system is installed
-\i ../../../scripts/001_install_migration_system.sql
-\i ../../../scripts/002_migration_runner_helpers.sql
+-- The packaged skill no longer includes top-level migration helper scripts.
+-- Install app_migration in the test database before running this module.
 
 -- ============================================================================
 -- TEST FUNCTIONS

@@ -32,6 +32,7 @@ Use this skill when the user:
 - Native migration system: pure PL/pgSQL alternative to Flyway or Liquibase
 - Trivadis naming: `l_` (local), `in_` (input), `io_` (inout), `co_` (constant)
 - Production posture: pair application-facing database patterns with operational internals for troubleshooting
+- Version-aware defaults: prefer broadly supported PostgreSQL patterns first, and present newer PostgreSQL 18+ capabilities as optional upgrades
 
 ## Architecture at a Glance
 
@@ -62,79 +63,70 @@ Use this skill when the user:
 
 | Document | Purpose |
 |----------|---------|
-| [quick-reference.md](references/quick-reference.md) | **QUICK LOOKUP** - Single-page cheat sheet (print this!) |
-| [schema-architecture.md](references/schema-architecture.md) | **START HERE** - Schema separation pattern (data/private/api) |
-| [coding-standards-trivadis.md](references/coding-standards-trivadis.md) | Coding standards & naming conventions (l_, g_, co_) |
+| [quick-reference.md](quick-reference.md) | **QUICK LOOKUP** - Single-page cheat sheet (print this!) |
+| [schema-architecture.md](schema-architecture.md) | **START HERE** - Schema separation pattern (data/private/api) |
+| [coding-standards-trivadis.md](coding-standards-trivadis.md) | Coding standards & naming conventions (l_, g_, co_) |
 
 ### 📚 Core Reference (Use Daily)
 
 | Document | Purpose |
 |----------|---------|
-| [plpgsql-table-api.md](references/plpgsql-table-api.md) | Table API functions, procedures, triggers |
-| [schema-naming.md](references/schema-naming.md) | Naming conventions for all objects |
-| [data-types.md](references/data-types.md) | Data type selection (UUIDv7, text, timestamptz) |
-| [indexes-constraints.md](references/indexes-constraints.md) | Index types, strategies, constraints |
-| [migrations.md](references/migrations.md) | Native migration system documentation |
-| [anti-patterns.md](references/anti-patterns.md) | Common mistakes to avoid |
-| [checklists-troubleshooting.md](references/checklists-troubleshooting.md) | Project checklists & problem solutions |
+| [plpgsql-table-api.md](plpgsql-table-api.md) | Table API functions, procedures, triggers |
+| [schema-naming.md](schema-naming.md) | Naming conventions for all objects |
+| [data-types.md](data-types.md) | Data type selection (UUIDv7, text, timestamptz) |
+| [indexes-constraints.md](indexes-constraints.md) | Index types, strategies, constraints |
+| [migrations.md](migrations.md) | Native migration system documentation |
+| [anti-patterns.md](anti-patterns.md) | Common mistakes to avoid |
+| [checklists-troubleshooting.md](checklists-troubleshooting.md) | Project checklists & problem solutions |
 
 ### 🔧 Advanced Topics (When Needed)
 
 | Document | Purpose |
 |----------|---------|
-| [testing-patterns.md](references/testing-patterns.md) | pgTAP unit testing, test factories |
-| [performance-tuning.md](references/performance-tuning.md) | EXPLAIN ANALYZE, query optimization, JIT |
-| [row-level-security.md](references/row-level-security.md) | RLS patterns, multi-tenant isolation |
-| [jsonb-patterns.md](references/jsonb-patterns.md) | JSONB indexing, queries, validation |
-| [audit-logging.md](references/audit-logging.md) | Generic audit triggers, change tracking |
-| [bulk-operations.md](references/bulk-operations.md) | COPY, batch inserts, upserts |
-| [session-management.md](references/session-management.md) | Session variables, connection pooling |
-| [transaction-patterns.md](references/transaction-patterns.md) | Isolation levels, locking, deadlock prevention |
-| [full-text-search.md](references/full-text-search.md) | tsvector, tsquery, ranking, multi-language |
-| [partitioning.md](references/partitioning.md) | Range, list, hash partitioning strategies |
-| [window-functions.md](references/window-functions.md) | Frames, ranking, running calculations |
-| [time-series.md](references/time-series.md) | Time-series data patterns, BRIN indexes |
-| [event-sourcing.md](references/event-sourcing.md) | Event store, projections, CQRS |
-| [queue-patterns.md](references/queue-patterns.md) | Job queues, SKIP LOCKED, LISTEN/NOTIFY |
-| [encryption.md](references/encryption.md) | pgcrypto, column encryption, TLS |
-| [vector-search.md](references/vector-search.md) | pgvector, embeddings, similarity search |
-| [postgis-patterns.md](references/postgis-patterns.md) | Spatial data, geographic queries |
+| [testing-patterns.md](testing-patterns.md) | pgTAP unit testing, test factories |
+| [performance-tuning.md](performance-tuning.md) | EXPLAIN ANALYZE, query optimization, JIT |
+| [row-level-security.md](row-level-security.md) | RLS patterns, multi-tenant isolation |
+| [jsonb-patterns.md](jsonb-patterns.md) | JSONB indexing, queries, validation |
+| [audit-logging.md](audit-logging.md) | Generic audit triggers, change tracking |
+| [bulk-operations.md](bulk-operations.md) | COPY, batch inserts, upserts |
+| [session-management.md](session-management.md) | Session variables, connection pooling |
+| [transaction-patterns.md](transaction-patterns.md) | Isolation levels, locking, deadlock prevention |
+| [full-text-search.md](full-text-search.md) | tsvector, tsquery, ranking, multi-language |
+| [partitioning.md](partitioning.md) | Range, list, hash partitioning strategies |
+| [window-functions.md](window-functions.md) | Frames, ranking, running calculations |
+| [time-series.md](time-series.md) | Time-series data patterns, BRIN indexes |
+| [event-sourcing.md](event-sourcing.md) | Event store, projections, CQRS |
+| [queue-patterns.md](queue-patterns.md) | Job queues, SKIP LOCKED, LISTEN/NOTIFY |
+| [encryption.md](encryption.md) | pgcrypto, column encryption, TLS |
+| [vector-search.md](vector-search.md) | pgvector, embeddings, similarity search |
+| [postgis-patterns.md](postgis-patterns.md) | Spatial data, geographic queries |
 
 ### 🚀 DevOps & Migration
 
 | Document | Purpose |
 |----------|---------|
-| [oracle-migration-guide.md](references/oracle-migration-guide.md) | PL/SQL to PL/pgSQL conversion |
-| [cicd-integration.md](references/cicd-integration.md) | GitHub Actions, GitLab CI, Docker |
-| [monitoring-observability.md](references/monitoring-observability.md) | pg_stat_statements, metrics, alerting |
-| [backup-recovery.md](references/backup-recovery.md) | pg_dump, pg_basebackup, PITR |
-| [replication-ha.md](references/replication-ha.md) | Streaming/logical replication, failover |
+| [oracle-migration-guide.md](oracle-migration-guide.md) | PL/SQL to PL/pgSQL conversion |
+| [cicd-integration.md](cicd-integration.md) | GitHub Actions, GitLab CI, Docker |
+| [monitoring-observability.md](monitoring-observability.md) | pg_stat_statements, metrics, alerting |
+| [backup-recovery.md](backup-recovery.md) | pg_dump, pg_basebackup, PITR |
+| [replication-ha.md](replication-ha.md) | Streaming/logical replication, failover |
 
 ### 🛠️ Operations Internals
 
 | Document | Purpose |
 |----------|---------|
-| [process-architecture.md](references/process-architecture.md) | Multi-process model, connection costs, pooling guidance |
-| [memory-management-ops.md](references/memory-management-ops.md) | Shared/private memory layout, `work_mem` multiplication, OOM prevention |
-| [mvcc-transactions.md](references/mvcc-transactions.md) | Isolation levels, wraparound risk, long-transaction impact |
-| [wal-operations.md](references/wal-operations.md) | WAL internals, checkpoints, crash recovery, WAL disk growth |
-| [storage-layout.md](references/storage-layout.md) | `PGDATA`, TOAST, fillfactor, tablespaces, disk management |
+| [process-architecture.md](process-architecture.md) | Multi-process model, connection costs, pooling guidance |
+| [memory-management-ops.md](memory-management-ops.md) | Shared/private memory layout, `work_mem` multiplication, OOM prevention |
+| [mvcc-transactions.md](mvcc-transactions.md) | Isolation levels, wraparound risk, long-transaction impact |
+| [wal-operations.md](wal-operations.md) | WAL internals, checkpoints, crash recovery, WAL disk growth |
+| [storage-layout.md](storage-layout.md) | `PGDATA`, TOAST, fillfactor, tablespaces, disk management |
 
 ### 📊 Data Warehousing
 
 | Document | Purpose |
 |----------|---------|
-| [data-warehousing-medallion.md](references/data-warehousing-medallion.md) | **Medallion Architecture** - Bronze/Silver/Gold, data lineage, ETL |
-| [analytical-queries.md](references/analytical-queries.md) | Analytical query patterns, OLAP optimization, GROUPING SETS |
-
-### Executable Scripts
-
-| Script | Purpose |
-|--------|---------|
-| [001_install_migration_system.sql](scripts/001_install_migration_system.sql) | Install migration system (core functions) |
-| [002_migration_runner_helpers.sql](scripts/002_migration_runner_helpers.sql) | Helper procedures (`run_versioned`, `run_repeatable`) |
-| [003_example_migrations.sql](scripts/003_example_migrations.sql) | Example migration patterns |
-| [999_uninstall_migration_system.sql](scripts/999_uninstall_migration_system.sql) | Clean removal of migration system |
+| [data-warehousing-medallion.md](data-warehousing-medallion.md) | **Medallion Architecture** - Bronze/Silver/Gold, data lineage, ETL |
+| [analytical-queries.md](analytical-queries.md) | Analytical query patterns, OLAP optimization, GROUPING SETS |
 
 ---
 

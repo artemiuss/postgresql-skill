@@ -3,7 +3,7 @@
 -- ============================================================================
 -- Tests for multi-tenant RLS policy configuration and session variable patterns.
 -- Note: Actual enforcement requires non-owner role testing.
--- Reference: references/row-level-security.md
+-- Reference: row-level-security.md
 -- ============================================================================
 
 -- ============================================================================
@@ -238,7 +238,7 @@ DECLARE
 BEGIN
     PERFORM test.set_context('test_rls_044_tenant_context_function');
 
-    -- Create helper function (as documented in references/row-level-security.md)
+    -- Create helper function (as documented in row-level-security.md)
     EXECUTE format('CREATE OR REPLACE FUNCTION private.%I(in_tenant_id uuid)
         RETURNS void
         LANGUAGE plpgsql

@@ -2,7 +2,7 @@
 -- MEDALLION ARCHITECTURE TESTS - DATA LINEAGE
 -- ============================================================================
 -- Tests for data lineage tracking across layers.
--- Reference: references/data-warehousing-medallion.md
+-- Reference: data-warehousing-medallion.md
 -- ============================================================================
 
 -- ============================================================================

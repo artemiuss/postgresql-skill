@@ -2,7 +2,7 @@
 -- ADVANCED INDEXING TESTS - COVERING INDEXES (INCLUDE)
 -- ============================================================================
 -- Tests for covering indexes with INCLUDE clause for index-only scans.
--- Reference: references/indexes-constraints.md
+-- Reference: indexes-constraints.md
 -- ============================================================================
 
 -- ============================================================================

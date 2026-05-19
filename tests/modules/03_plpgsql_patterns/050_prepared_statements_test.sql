@@ -5,7 +5,7 @@
 -- 1. PREPARE / EXECUTE / DEALLOCATE lifecycle
 -- 2. Plan caching (generic vs custom plans)
 -- 3. Monitoring via pg_prepared_statements
--- Reference: references/performance-tuning.md §Prepared Statements
+-- Reference: performance-tuning.md §Prepared Statements
 -- ============================================================================
 
 -- ============================================================================

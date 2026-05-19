@@ -2,7 +2,7 @@
 -- MEDALLION ARCHITECTURE TESTS - BRONZE LAYER
 -- ============================================================================
 -- Tests for raw data landing zone patterns.
--- Reference: references/data-warehousing-medallion.md
+-- Reference: data-warehousing-medallion.md
 -- ============================================================================
 
 -- ============================================================================

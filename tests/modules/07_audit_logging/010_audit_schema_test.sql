@@ -2,7 +2,7 @@
 -- AUDIT LOGGING TESTS - SCHEMA STRUCTURE
 -- ============================================================================
 -- Tests for app_audit schema structure and table design.
--- Reference: references/audit-logging.md
+-- Reference: audit-logging.md
 -- ============================================================================
 
 -- ============================================================================

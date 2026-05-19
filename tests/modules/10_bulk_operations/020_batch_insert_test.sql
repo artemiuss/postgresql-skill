@@ -2,7 +2,7 @@
 -- BULK OPERATIONS TESTS - BATCH INSERT
 -- ============================================================================
 -- Tests for batch insert patterns and INSERT ... SELECT.
--- Reference: references/bulk-operations.md
+-- Reference: bulk-operations.md
 -- ============================================================================
 
 -- ============================================================================

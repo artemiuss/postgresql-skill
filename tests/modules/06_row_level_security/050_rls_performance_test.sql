@@ -5,7 +5,7 @@
 -- row-level-security.md §Cache Function Results with Subselect:
 -- 1. Subselect wrapper for function caching in policies
 -- 2. SECURITY DEFINER helper function for complex access checks
--- Reference: references/row-level-security.md §Cache Function Results
+-- Reference: row-level-security.md §Cache Function Results
 -- ============================================================================
 
 -- ============================================================================

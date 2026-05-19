@@ -7,7 +7,7 @@
 -- 2. Idempotent FOREIGN KEY constraint
 -- 3. Idempotent CHECK constraint
 -- 4. Constraint inspection query
--- Reference: references/migrations.md §Idempotent Constraint Creation
+-- Reference: migrations.md §Idempotent Constraint Creation
 -- ============================================================================
 
 -- ============================================================================

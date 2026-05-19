@@ -2,7 +2,7 @@
 -- ADVANCED INDEXING TESTS - CONCURRENT INDEX OPERATIONS
 -- ============================================================================
 -- Tests for CREATE INDEX CONCURRENTLY and related operations.
--- Reference: references/indexes-constraints.md
+-- Reference: indexes-constraints.md
 -- ============================================================================
 
 -- ============================================================================

@@ -2,7 +2,7 @@
 -- AUDIT LOGGING TESTS - APPLICATION CONTEXT
 -- ============================================================================
 -- Tests for application context tracking in audit logs.
--- Reference: references/audit-logging.md
+-- Reference: audit-logging.md
 -- ============================================================================
 
 -- ============================================================================

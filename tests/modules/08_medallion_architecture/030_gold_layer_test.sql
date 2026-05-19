@@ -2,7 +2,7 @@
 -- MEDALLION ARCHITECTURE TESTS - GOLD LAYER
 -- ============================================================================
 -- Tests for star schema patterns (dimensions, facts, aggregates).
--- Reference: references/data-warehousing-medallion.md
+-- Reference: data-warehousing-medallion.md
 -- ============================================================================
 
 -- ============================================================================

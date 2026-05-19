@@ -5,7 +5,7 @@
 -- 1. Batch fetch with ANY(uuid[])
 -- 2. JOIN-based denormalized API function
 -- 3. LATERAL join for top-N-per-group
--- Reference: references/anti-patterns.md §N+1 Query Pattern
+-- Reference: anti-patterns.md §N+1 Query Pattern
 -- ============================================================================
 
 -- ============================================================================

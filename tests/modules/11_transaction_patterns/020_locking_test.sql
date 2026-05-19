@@ -2,7 +2,7 @@
 -- TRANSACTION PATTERNS TESTS - ROW LOCKING
 -- ============================================================================
 -- Tests for SELECT FOR UPDATE and other locking patterns.
--- Reference: references/transaction-patterns.md
+-- Reference: transaction-patterns.md
 -- ============================================================================
 
 -- ============================================================================

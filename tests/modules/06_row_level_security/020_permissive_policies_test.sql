@@ -4,7 +4,7 @@
 -- Tests for PERMISSIVE policy creation and configuration.
 -- Note: Actual enforcement requires non-owner role testing which is complex.
 -- These tests verify policy structure and configuration.
--- Reference: references/row-level-security.md
+-- Reference: row-level-security.md
 -- ============================================================================
 
 -- ============================================================================

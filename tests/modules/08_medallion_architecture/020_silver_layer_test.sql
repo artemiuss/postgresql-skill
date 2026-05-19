@@ -2,7 +2,7 @@
 -- MEDALLION ARCHITECTURE TESTS - SILVER LAYER
 -- ============================================================================
 -- Tests for cleansed data patterns including SCD Type 2.
--- Reference: references/data-warehousing-medallion.md
+-- Reference: data-warehousing-medallion.md
 -- ============================================================================
 
 -- ============================================================================

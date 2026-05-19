@@ -2,7 +2,7 @@
 -- BULK OPERATIONS TESTS - UPSERT (ON CONFLICT)
 -- ============================================================================
 -- Tests for INSERT ... ON CONFLICT (upsert) patterns.
--- Reference: references/bulk-operations.md
+-- Reference: bulk-operations.md
 -- ============================================================================
 
 -- ============================================================================

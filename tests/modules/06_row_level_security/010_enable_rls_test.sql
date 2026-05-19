@@ -2,7 +2,7 @@
 -- ROW-LEVEL SECURITY TESTS - ENABLE/DISABLE RLS
 -- ============================================================================
 -- Tests for RLS enable/disable, FORCE ROW LEVEL SECURITY, and basic policies.
--- Reference: references/row-level-security.md
+-- Reference: row-level-security.md
 -- ============================================================================
 
 -- ============================================================================

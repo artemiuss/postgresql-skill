@@ -4,7 +4,7 @@
 -- Tests for RESTRICTIVE policy creation and configuration.
 -- RESTRICTIVE policies are AND'd with PERMISSIVE policies.
 -- Note: Actual enforcement requires non-owner role testing.
--- Reference: references/row-level-security.md
+-- Reference: row-level-security.md
 -- ============================================================================
 
 -- ============================================================================

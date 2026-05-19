@@ -2,7 +2,7 @@
 -- TRANSACTION PATTERNS TESTS - ISOLATION LEVELS
 -- ============================================================================
 -- Tests for transaction isolation levels and their effects.
--- Reference: references/transaction-patterns.md
+-- Reference: transaction-patterns.md
 -- ============================================================================
 
 -- ============================================================================

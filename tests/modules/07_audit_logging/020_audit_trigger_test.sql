@@ -2,7 +2,7 @@
 -- AUDIT LOGGING TESTS - TRIGGER BEHAVIOR
 -- ============================================================================
 -- Tests for generic audit trigger function behavior.
--- Reference: references/audit-logging.md
+-- Reference: audit-logging.md
 -- ============================================================================
 
 -- ============================================================================

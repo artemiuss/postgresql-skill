@@ -10,7 +10,7 @@ Quick reference checklists for common tasks and solutions to common problems.
 
 - [ ] Create schemas: `data`, `private`, `api`, `app_audit`
 - [ ] Revoke public schema access: `REVOKE ALL ON SCHEMA public FROM PUBLIC`
-- [ ] Install migration system (run `scripts/001_install_migration_system.sql`)
+- [ ] Install migration system using the SQL definitions in `migrations.md` or the project's migration runner
 - [ ] Create application roles with appropriate permissions
 - [ ] Set up `private.set_updated_at()` trigger function
 

@@ -2,7 +2,7 @@
 -- ADVANCED INDEXING TESTS - PARTIAL INDEXES
 -- ============================================================================
 -- Tests for partial indexes with WHERE clauses.
--- Reference: references/indexes-constraints.md
+-- Reference: indexes-constraints.md
 -- ============================================================================
 
 -- ============================================================================

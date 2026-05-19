@@ -2,7 +2,7 @@
 -- ADVANCED INDEXING TESTS - GIN INDEXES
 -- ============================================================================
 -- Tests for GIN (Generalized Inverted Index) on arrays, JSONB, and full-text.
--- Reference: references/indexes-constraints.md
+-- Reference: indexes-constraints.md
 -- ============================================================================
 
 -- ============================================================================

@@ -39,10 +39,8 @@ https://github.com/wimolivier/postgresql-best-practices
 Taken from the base repository:
 
 - `SKILL.md`
-- `references/` directory
-- `scripts/` directory
+- Markdown reference documents, now stored at the skill root
 - `tests/` directory
-- `CLAUDE.md`
 
 ### Imported Operations References
 
@@ -52,11 +50,11 @@ https://github.com/planetscale/database-skills/tree/main/skills/postgres
 
 Imported files:
 
-- `references/process-architecture.md`
-- `references/memory-management-ops.md`
-- `references/mvcc-transactions.md`
-- `references/wal-operations.md`
-- `references/storage-layout.md`
+- `process-architecture.md`
+- `memory-management-ops.md`
+- `mvcc-transactions.md`
+- `wal-operations.md`
+- `storage-layout.md`
 
 Only generic Postgres operations and internals material was imported. Provider-specific hosting, CLI, and product documents were left out.
 
@@ -65,7 +63,8 @@ Only generic Postgres operations and internals material was imported. Provider-s
 - Renamed the skill to `postgresql-skill`
 - Expanded the `SKILL.md` trigger/usage text to include runtime troubleshooting and incident analysis
 - Added a dedicated `Operations Internals` section in `SKILL.md`
-- Kept the base scripts and test suite intact
+- Moved reference documents from `references/` to the skill root
+- Removed the top-level SQL helper scripts from the packaged skill
 - Added source provenance and third-party attribution for the imported documents
 
 ## Repository Layout
@@ -73,21 +72,14 @@ Only generic Postgres operations and internals material was imported. Provider-s
 ```text
 postgresql-skill/
 ├── SKILL.md
-├── CLAUDE.md
 ├── README.md
-├── THIRD_PARTY_NOTICES.md
-├── references/                  # 39 reference docs
-├── scripts/                     # 4 SQL helper scripts
-├── tests/                       # inherited PL/pgSQL test suite
-└── licenses/
-    └── third-party-MIT.txt
+├── *.md                         # root-level reference docs
+└── tests/                       # inherited PL/pgSQL test suite
 ```
 
 ## Attribution and Licensing
 
 - The imported third-party references are covered by the MIT license from the source repository
-- A copy of that license is included at `licenses/third-party-MIT.txt`
-- A short attribution summary is included in `THIRD_PARTY_NOTICES.md`
 
 ## Notes
 
