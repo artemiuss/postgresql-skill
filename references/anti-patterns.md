@@ -86,7 +86,7 @@ CREATE TABLE orders (
 );
 ```
 
-**Solution**: Use identity columns or `uuidv7()`.
+**Solution**: Use identity columns or a version-appropriate UUID default.
 
 ```sql
 -- Good: Identity column
@@ -94,9 +94,9 @@ CREATE TABLE orders (
     id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY
 );
 
--- Good: UUIDv7 (PostgreSQL 18+)
+-- Good: UUID default (use uuidv7() instead on PostgreSQL 18+ if desired)
 CREATE TABLE orders (
-    id uuid PRIMARY KEY DEFAULT uuidv7()
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid()
 );
 ```
 
@@ -491,7 +491,7 @@ CREATE TABLE users (
 
 -- Hash on insert
 INSERT INTO users (id, email, password_hash)
-VALUES (uuidv7(), 'user@example.com', crypt('password', gen_salt('bf')));
+VALUES (gen_random_uuid(), 'user@example.com', crypt('password', gen_salt('bf')));
 ```
 
 ### ❌ SECURITY DEFINER Without search_path

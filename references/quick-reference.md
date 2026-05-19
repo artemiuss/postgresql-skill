@@ -73,7 +73,7 @@ Application → api schema → data schema
 | `numeric(p,s)` | `money`, `float`, `real` |
 | `timestamptz` | `timestamp` |
 | `boolean` | `integer` flags |
-| `uuid DEFAULT uuidv7()` | `serial`, `uuid_generate_v4()` |
+| `GENERATED ALWAYS AS IDENTITY` or version-appropriate `uuid` default | `serial`, `uuid_generate_v4()` |
 | `GENERATED ALWAYS AS IDENTITY` | `serial`, `bigserial` |
 | `jsonb` | `json`, EAV tables |
 | `integer` / `bigint` | `smallint` (unless space-critical) |
@@ -85,7 +85,7 @@ Application → api schema → data schema
 ### Create Table
 ```sql
 CREATE TABLE data.customers (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     email       text NOT NULL,
     name        text NOT NULL,
     is_active   boolean NOT NULL DEFAULT true,
@@ -276,19 +276,19 @@ ALTER ROLE app_service SET search_path = api, pg_temp;
 
 ---
 
-## PostgreSQL 18+ Features
+## Version-Specific PostgreSQL Features
 
 ```sql
--- UUIDv7 (timestamp-ordered)
+-- PostgreSQL 18+: UUIDv7 (timestamp-ordered)
 id uuid PRIMARY KEY DEFAULT uuidv7()
 
 -- Extract timestamp from UUIDv7
 SELECT uuid_extract_timestamp(id) FROM data.orders;
 
--- Virtual generated column
+-- PostgreSQL 18+: virtual generated column
 full_name text GENERATED ALWAYS AS (first_name || ' ' || last_name) VIRTUAL
 
--- OLD/NEW in RETURNING
+-- PostgreSQL 18+: OLD/NEW in RETURNING
 UPDATE data.orders SET status = 'shipped'
 RETURNING OLD.status AS old_status, NEW.status AS new_status;
 ```

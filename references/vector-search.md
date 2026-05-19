@@ -89,7 +89,7 @@ SELECT * FROM pg_extension WHERE extname = 'vector';
 
 ```sql
 CREATE TABLE data.documents (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     title           text NOT NULL,
     content         text NOT NULL,
     embedding       vector(1536),  -- OpenAI ada-002 dimensions
@@ -106,7 +106,7 @@ COMMENT ON COLUMN data.documents.embedding IS 'OpenAI text-embedding-ada-002 (15
 
 ```sql
 CREATE TABLE data.products (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name            text NOT NULL,
     description     text,
     image_url       text,
@@ -133,7 +133,7 @@ CREATE INDEX products_image_embedding_idx ON data.products
 ```sql
 -- Main document table
 CREATE TABLE data.documents (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     title           text NOT NULL,
     source_url      text,
     metadata        jsonb NOT NULL DEFAULT '{}',
@@ -142,7 +142,7 @@ CREATE TABLE data.documents (
 
 -- Chunks with embeddings
 CREATE TABLE data.document_chunks (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     document_id     uuid NOT NULL REFERENCES data.documents(id) ON DELETE CASCADE,
     chunk_index     integer NOT NULL,
     content         text NOT NULL,
@@ -161,7 +161,7 @@ CREATE INDEX document_chunks_embedding_idx ON data.document_chunks
 
 ```sql
 CREATE TABLE data.embeddings (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     source_type     text NOT NULL,  -- 'document', 'product', 'user'
     source_id       uuid NOT NULL,
     embedding       vector(1536) NOT NULL,
@@ -380,7 +380,7 @@ $$;
 ```sql
 -- Table with both FTS and vector
 CREATE TABLE data.articles (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     title           text NOT NULL,
     content         text NOT NULL,
     embedding       vector(1536),

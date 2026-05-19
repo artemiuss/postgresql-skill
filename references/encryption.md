@@ -126,7 +126,7 @@ SELECT pgp_sym_decrypt('\x...', 'my-password');
 
 ```sql
 CREATE TABLE data.users (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     email           text NOT NULL UNIQUE,  -- Not encrypted (for lookups)
     email_hash      text NOT NULL,         -- For searching encrypted email
 
@@ -366,7 +366,7 @@ $$;
 -- 4. Application decrypts using HSM
 
 CREATE TABLE data.hsm_encrypted_data (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     key_id          text NOT NULL,          -- HSM key identifier
     encrypted_data  bytea NOT NULL,         -- HSM-encrypted blob
     created_at      timestamptz NOT NULL DEFAULT now()
@@ -590,7 +590,7 @@ FROM data.users WHERE email = 'user@example.com';
 ```sql
 -- Log access to sensitive data
 CREATE TABLE data.sensitive_data_access_log (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     table_name      text NOT NULL,
     record_id       uuid NOT NULL,
     accessed_by     text NOT NULL DEFAULT current_user,

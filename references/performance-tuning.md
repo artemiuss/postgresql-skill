@@ -531,7 +531,7 @@ FROM pg_prepared_statements;
 ```sql
 -- Create partitioned table
 CREATE TABLE data.events (
-    id          uuid NOT NULL DEFAULT uuidv7(),
+    id          uuid NOT NULL DEFAULT gen_random_uuid(),
     event_type  text NOT NULL,
     payload     jsonb,
     created_at  timestamptz NOT NULL DEFAULT now()
@@ -600,7 +600,7 @@ SELECT cron.schedule('create-event-partitions', '0 0 25 * *',
 ```sql
 -- Partition by region
 CREATE TABLE data.customers (
-    id      uuid NOT NULL DEFAULT uuidv7(),
+    id      uuid NOT NULL DEFAULT gen_random_uuid(),
     email   text NOT NULL,
     region  text NOT NULL,
     name    text
@@ -619,7 +619,7 @@ CREATE TABLE data.customers_apac PARTITION OF data.customers
 ```sql
 -- Distribute by customer_id hash
 CREATE TABLE data.order_items (
-    id          uuid NOT NULL DEFAULT uuidv7(),
+    id          uuid NOT NULL DEFAULT gen_random_uuid(),
     order_id    uuid NOT NULL,
     customer_id uuid NOT NULL,
     product_id  uuid NOT NULL,

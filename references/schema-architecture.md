@@ -131,7 +131,7 @@ COMMENT ON SCHEMA data IS 'Base tables - no direct external access';
 
 -- Tables only
 CREATE TABLE data.customers (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     email text NOT NULL,
     name text NOT NULL,
     password_hash text NOT NULL,  -- Sensitive!
@@ -141,7 +141,7 @@ CREATE TABLE data.customers (
 );
 
 CREATE TABLE data.orders (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     customer_id uuid NOT NULL REFERENCES data.customers(id),
     status text NOT NULL DEFAULT 'pending',
     total numeric(15,2) NOT NULL,

@@ -673,7 +673,7 @@ CREATE SCHEMA IF NOT EXISTS app_audit;
 
 -- Create customers table
 CREATE TABLE data.customers (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     email text NOT NULL,
     name text NOT NULL,
     is_active boolean NOT NULL DEFAULT true,
@@ -1145,7 +1145,7 @@ CALL app_migration.run_versioned(
     in_description := 'Create users table',
     in_sql := $mig$
         CREATE TABLE data.users (
-            id uuid PRIMARY KEY DEFAULT uuidv7(),
+            id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
             email text NOT NULL UNIQUE,
             created_at timestamptz NOT NULL DEFAULT now()
         );

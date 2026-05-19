@@ -71,7 +71,7 @@ flowchart TD
 ```sql
 -- Create partitioned table
 CREATE TABLE data.events (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     event_type      text NOT NULL,
     payload         jsonb NOT NULL DEFAULT '{}',
     created_at      timestamptz NOT NULL DEFAULT now(),
@@ -134,7 +134,7 @@ CREATE TABLE data.users_p2 PARTITION OF data.users
 ```sql
 -- Partition by region
 CREATE TABLE data.orders (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     customer_id     uuid NOT NULL,
     region          text NOT NULL,
     total           numeric(15,2) NOT NULL,
@@ -160,7 +160,7 @@ CREATE TABLE data.orders_other PARTITION OF data.orders DEFAULT;
 ```sql
 -- Each tenant gets its own partition
 CREATE TABLE data.tenant_data (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     tenant_id       uuid NOT NULL,
     data            jsonb NOT NULL,
     created_at      timestamptz NOT NULL DEFAULT now(),
@@ -197,7 +197,7 @@ SELECT private.create_tenant_partition(id) FROM data.tenants;
 ```sql
 -- Partition by order status (hot/cold separation)
 CREATE TABLE data.orders (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     status          text NOT NULL DEFAULT 'pending',
     total           numeric(15,2) NOT NULL,
     created_at      timestamptz NOT NULL DEFAULT now(),
@@ -224,7 +224,7 @@ CREATE TABLE data.orders_completed PARTITION OF data.orders
 ```sql
 -- Distribute by customer_id for parallel processing
 CREATE TABLE data.order_items (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     order_id        uuid NOT NULL,
     customer_id     uuid NOT NULL,
     product_id      uuid NOT NULL,
@@ -462,7 +462,7 @@ CREATE INDEX events_active_customer_idx
 ```sql
 -- Unique constraint MUST include partition key
 CREATE TABLE data.users (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     email           text NOT NULL,
     region          text NOT NULL,
     created_at      timestamptz NOT NULL DEFAULT now(),
@@ -483,7 +483,7 @@ CREATE TABLE data.users (
 ```sql
 -- Foreign key TO partitioned table (PostgreSQL 12+)
 CREATE TABLE data.order_items (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     order_id        uuid NOT NULL,
     order_region    text NOT NULL,
     product_id      uuid NOT NULL,
@@ -495,7 +495,7 @@ CREATE TABLE data.order_items (
 
 -- Foreign key FROM partitioned table works normally
 CREATE TABLE data.events (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     user_id         uuid REFERENCES data.users_non_partitioned(id),
     created_at      timestamptz NOT NULL,
 
@@ -510,7 +510,7 @@ CREATE TABLE data.events (
 ```sql
 -- Step 1: Create new partitioned table
 CREATE TABLE data.events_new (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     event_type      text NOT NULL,
     payload         jsonb NOT NULL DEFAULT '{}',
     created_at      timestamptz NOT NULL DEFAULT now(),
@@ -696,7 +696,7 @@ ORDER BY c.reltuples DESC;
 ```sql
 -- Two-level partitioning: first by region, then by date
 CREATE TABLE data.sales (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     region          text NOT NULL,
     amount          numeric(15,2) NOT NULL,
     sale_date       date NOT NULL,

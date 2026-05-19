@@ -51,7 +51,7 @@ flowchart TD
 
 ```sql
 CREATE TABLE data.job_queue (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     queue_name      text NOT NULL DEFAULT 'default',
     job_type        text NOT NULL,
     payload         jsonb NOT NULL,
@@ -495,7 +495,7 @@ $$;
 
 ```sql
 CREATE TABLE data.scheduled_jobs (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name            text NOT NULL UNIQUE,
     job_type        text NOT NULL,
     payload         jsonb NOT NULL DEFAULT '{}',

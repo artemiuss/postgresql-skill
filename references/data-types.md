@@ -1,4 +1,6 @@
-# Data Types Best Practices (PostgreSQL 18+)
+# Data Types Best Practices
+
+These recommendations are version-aware. Use broadly supported PostgreSQL types by default, and adopt newer functions such as `uuidv7()` only when the target server version provides them.
 
 ## Table of Contents
 1. [Primary Keys](#primary-keys)
@@ -26,7 +28,7 @@ flowchart TD
     TYPE -->|"Key-Value/Document"| JSON["Use: jsonb"]
     TYPE -->|"List of values"| ARR["Use: array[]"]
     
-    PK -->|"Yes"| UUID7["Use: uuid DEFAULT uuidv7()"]
+    PK -->|"Yes"| UUID["Use: uuid with version-appropriate generator"]
     PK -->|"No (internal only)"| IDENTITY["Use: GENERATED ALWAYS AS IDENTITY"]
     
     INT -->|"< 2 billion"| INT4["Use: integer"]
@@ -36,7 +38,7 @@ flowchart TD
     DT -->|"Yes (usually!)"| TSTZ["Use: timestamptz"]
     DT -->|"No (rare)"| TS["Use: timestamp"]
     
-    style UUID7 fill:#c8e6c9
+    style UUID fill:#c8e6c9
     style IDENTITY fill:#c8e6c9
     style TXT fill:#c8e6c9
     style MONEY fill:#c8e6c9
@@ -54,7 +56,7 @@ graph LR
         G2["numeric(p,s)"]
         G3["timestamptz"]
         G4["boolean"]
-        G5["uuid + uuidv7()"]
+        G5["uuid + version-appropriate generator"]
         G6["IDENTITY"]
         G7["jsonb"]
         G8["integer/bigint"]
@@ -84,16 +86,21 @@ graph LR
 
 ## Primary Keys
 
-### Recommended: UUIDv7 (PostgreSQL 18+)
+### Recommended: UUID Primary Keys (Version-Aware)
 
 ```sql
--- UUIDv7: timestamp-ordered, globally unique, excellent index locality
+-- PostgreSQL 18+: UUIDv7 is timestamp-ordered and globally unique
 CREATE TABLE data.orders (
     id uuid PRIMARY KEY DEFAULT uuidv7()
 );
 
 -- Extract timestamp from UUIDv7
 SELECT uuid_extract_timestamp(id) AS created FROM data.orders;
+
+-- Older versions: use random UUIDs when UUID primary keys are still required
+CREATE TABLE data.orders (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid()
+);
 ```
 
 **Benefits of UUIDv7:**
@@ -247,12 +254,12 @@ SELECT now() + interval '1 hour';
 SELECT age(now(), created_at);
 ```
 
-### Date/Time Ranges (PostgreSQL 18 Temporal Constraints)
+### Date/Time Ranges (PostgreSQL 18+ Temporal Constraints)
 
 ```sql
 -- Range types for temporal data
 CREATE TABLE data.reservations (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     room_id uuid NOT NULL,
     guest_id uuid NOT NULL,
     during tstzrange NOT NULL,  -- [checkin, checkout)
@@ -297,7 +304,7 @@ attributes  jsonb
 
 -- With validation
 CREATE TABLE data.products (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     data jsonb NOT NULL,
     CONSTRAINT products_data_valid CHECK (
         data ? 'name' AND 
@@ -332,7 +339,7 @@ coordinates double precision[2]
 
 -- With constraints
 CREATE TABLE data.articles (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     tags text[] NOT NULL DEFAULT '{}',
     CONSTRAINT articles_tags_not_empty CHECK (array_length(tags, 1) > 0)
 );
@@ -347,11 +354,14 @@ SELECT * FROM data.articles WHERE 'postgresql' = ANY(tags);
 
 ## UUID Types
 
-### UUIDv7 for Primary Keys (PostgreSQL 18+)
+### UUID Primary Keys
 
 ```sql
--- New in PostgreSQL 18: timestamp-ordered UUIDs
+-- PostgreSQL 18+: timestamp-ordered UUIDs
 id uuid PRIMARY KEY DEFAULT uuidv7()
+
+-- Older versions: random UUID fallback
+id uuid PRIMARY KEY DEFAULT gen_random_uuid()
 
 -- Extract timestamp
 SELECT uuid_extract_timestamp(uuidv7());  -- Returns timestamptz
@@ -381,7 +391,7 @@ CREATE EXTENSION IF NOT EXISTS ltree;
 -- Labels separated by dots, each label is alphanumeric
 
 CREATE TABLE data.categories (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name        text NOT NULL,
     path        ltree NOT NULL,
     created_at  timestamptz NOT NULL DEFAULT now()
@@ -532,14 +542,14 @@ ALTER TABLE data.products
     USING price::numeric;
 ```
 
-## Generated Columns (PostgreSQL 18+)
+## Generated Columns
 
-### Virtual Generated Columns (Default in PG18)
+### Virtual Generated Columns (PostgreSQL 18+)
 
 ```sql
 -- Computed at query time, no storage
 CREATE TABLE data.orders (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     subtotal numeric(15,2) NOT NULL,
     tax_rate numeric(5,4) NOT NULL DEFAULT 0.0875,
     -- Virtual (computed when read)
@@ -552,7 +562,7 @@ CREATE TABLE data.orders (
 ```sql
 -- Computed and stored on write (use when computation expensive)
 CREATE TABLE data.users (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     first_name text NOT NULL,
     last_name text NOT NULL,
     -- Stored (can be indexed, replicated)

@@ -54,7 +54,7 @@ flowchart TB
 ```sql
 -- Event store table
 CREATE TABLE data.events (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     stream_type     text NOT NULL,        -- e.g., 'Order', 'Customer'
     stream_id       uuid NOT NULL,        -- Aggregate ID
     version         integer NOT NULL,     -- Sequence within stream
@@ -587,7 +587,7 @@ SECURITY DEFINER
 SET search_path = data, private, pg_temp
 AS $$
 DECLARE
-    l_order_id uuid := uuidv7();
+    l_order_id uuid := gen_random_uuid();
     l_total numeric;
 BEGIN
     -- Validate
@@ -750,7 +750,7 @@ $$;
 ```sql
 -- Partition by month for large event stores
 CREATE TABLE data.events (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     stream_type     text NOT NULL,
     stream_id       uuid NOT NULL,
     version         integer NOT NULL,

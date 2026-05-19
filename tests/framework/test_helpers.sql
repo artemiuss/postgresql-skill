@@ -292,13 +292,19 @@ COMMENT ON FUNCTION test.get_function_search_path(text, text) IS 'Get function s
 -- Generate a test UUID (if uuidv7 not available)
 CREATE OR REPLACE FUNCTION test.gen_uuid()
 RETURNS uuid
-LANGUAGE sql
+LANGUAGE plpgsql
 VOLATILE
 AS $$
-    SELECT COALESCE(
-        (SELECT uuidv7()),
-        gen_random_uuid()
-    );
+DECLARE
+    l_uuid uuid;
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_proc WHERE proname = 'uuidv7') THEN
+        EXECUTE 'SELECT uuidv7()' INTO l_uuid;
+        RETURN l_uuid;
+    END IF;
+
+    RETURN gen_random_uuid();
+END;
 $$;
 
 COMMENT ON FUNCTION test.gen_uuid() IS 'Generate UUID using uuidv7() or fallback to gen_random_uuid()';

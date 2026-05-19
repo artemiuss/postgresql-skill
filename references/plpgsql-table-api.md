@@ -860,10 +860,10 @@ END;
 $$;
 ```
 
-### Using PostgreSQL 18 RETURNING with OLD/NEW
+### Using Version-Specific RETURNING with OLD/NEW
 
 ```sql
--- Track changes using PG18 OLD/NEW in RETURNING
+-- PostgreSQL 18+: track changes using OLD/NEW in RETURNING
 CREATE FUNCTION api.update_order_with_history(
     in_order_id uuid,
     in_new_status text

@@ -6,7 +6,7 @@
 3. [Index Design Strategies](#index-design-strategies)
 4. [Constraint Types](#constraint-types)
 5. [Foreign Key Design](#foreign-key-design)
-6. [PostgreSQL 18 Features](#postgresql-18-features)
+6. [Version-Specific Features](#version-specific-features)
 7. [Maintenance](#maintenance)
 
 ## Index Fundamentals
@@ -357,12 +357,12 @@ REINDEX INDEX CONCURRENTLY orders_customer_idx;
 ```sql
 -- Inline definition
 CREATE TABLE data.orders (
-    id uuid PRIMARY KEY DEFAULT uuidv7()
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid()
 );
 
 -- Named constraint
 CREATE TABLE data.orders (
-    id uuid DEFAULT uuidv7(),
+    id uuid DEFAULT gen_random_uuid(),
     CONSTRAINT orders_pkey PRIMARY KEY (id)
 );
 
@@ -446,7 +446,7 @@ Prevent overlapping values:
 ```sql
 -- Prevent overlapping reservations
 CREATE TABLE data.reservations (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     room_id uuid NOT NULL,
     during tstzrange NOT NULL,
     
@@ -456,7 +456,7 @@ CREATE TABLE data.reservations (
 
 -- Prevent overlapping employee assignments
 CREATE TABLE data.assignments (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     employee_id uuid NOT NULL,
     project_id uuid NOT NULL,
     during daterange NOT NULL,
@@ -472,7 +472,7 @@ CREATE TABLE data.assignments (
 
 ```sql
 CREATE TABLE data.orders (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     customer_id uuid NOT NULL,
     
     CONSTRAINT orders_customer_fkey 
@@ -519,7 +519,7 @@ ALTER TABLE data.accounts
 ```sql
 -- Tree structure (parent-child)
 CREATE TABLE data.categories (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name text NOT NULL,
     parent_id uuid,
     
@@ -536,7 +536,7 @@ CREATE INDEX categories_parent_id_idx ON data.categories(parent_id);
 ```sql
 -- Allow circular references within transaction
 CREATE TABLE data.employees (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     manager_id uuid,
     
     CONSTRAINT employees_manager_fkey 
@@ -551,7 +551,7 @@ INSERT INTO data.employees (id, manager_id) VALUES ('b', 'a');
 COMMIT;  -- Constraint checked here
 ```
 
-## PostgreSQL 18 Features
+## Version-Specific Features
 
 ### Temporal Constraints
 
@@ -581,7 +581,7 @@ CREATE TABLE data.room_rates (
 
 -- Temporal foreign key
 CREATE TABLE data.bookings (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     room_type text NOT NULL,
     booking_period daterange NOT NULL,
     

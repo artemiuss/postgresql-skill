@@ -21,7 +21,7 @@ CALL app_migration.run_versioned(
     in_description := 'Create customers table',
     in_sql := $mig$
         CREATE TABLE data.customers (
-            id uuid PRIMARY KEY DEFAULT uuidv7(),
+            id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
             email text NOT NULL,
             name text NOT NULL,
             is_active boolean NOT NULL DEFAULT true,
@@ -55,7 +55,7 @@ CALL app_migration.run_versioned(
     in_description := 'Create orders table',
     in_sql := $mig$
         CREATE TABLE data.orders (
-            id uuid PRIMARY KEY DEFAULT uuidv7(),
+            id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
             customer_id uuid NOT NULL REFERENCES data.customers(id),
             status text NOT NULL DEFAULT 'pending',
             subtotal numeric(15,2) NOT NULL,
@@ -294,13 +294,13 @@ CALL app_migration.run_all(
             "version": "001",
             "description": "Create customers table",
             "filename": "V001__create_customers.sql",
-            "sql": "CREATE TABLE data.customers (id uuid PRIMARY KEY DEFAULT uuidv7(), email text NOT NULL);"
+            "sql": "CREATE TABLE data.customers (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), email text NOT NULL);"
         },
         {
             "version": "002", 
             "description": "Create orders table",
             "filename": "V002__create_orders.sql",
-            "sql": "CREATE TABLE data.orders (id uuid PRIMARY KEY DEFAULT uuidv7(), customer_id uuid NOT NULL);"
+            "sql": "CREATE TABLE data.orders (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), customer_id uuid NOT NULL);"
         }
     ]'::jsonb,
     in_repeatable_migrations := '[

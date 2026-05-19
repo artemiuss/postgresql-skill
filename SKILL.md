@@ -1,9 +1,9 @@
 ---
 name: postgresql-skill
-description: PostgreSQL 18+ production engineering best practices. Covers schema architecture, Table API design, PL/pgSQL standards, migrations, indexing, performance, process architecture, memory management, MVCC internals, WAL, storage layout, data warehousing, ETL, lineage, Oracle migration, CI/CD, and PostgreSQL 18+ features. Use for schema, table, function, procedure, trigger, migration, query review, audit logging, connection scaling, incident diagnosis, and operational troubleshooting.
+description: PostgreSQL production engineering best practices. Covers schema architecture, Table API design, PL/pgSQL standards, migrations, indexing, performance, process architecture, memory management, MVCC internals, WAL, storage layout, data warehousing, ETL, lineage, Oracle migration, CI/CD, and version-specific PostgreSQL features. Use for schema, table, function, procedure, trigger, migration, query review, audit logging, connection scaling, incident diagnosis, and operational troubleshooting.
 ---
 
-# PostgreSQL Skill (PostgreSQL 18+)
+# PostgreSQL Skill
 
 ## When to use
 
@@ -15,7 +15,7 @@ Use this skill when the user:
 - Implements the Table API pattern with `SECURITY DEFINER` functions and schema separation
 - Sets up database migrations or schema versioning
 - Needs index optimization, constraint design, or query performance help
-- Asks about PostgreSQL 18+ features such as `uuidv7`, virtual columns, or temporal constraints
+- Asks about version-specific PostgreSQL features such as `uuidv7`, virtual columns, or temporal constraints
 - Builds data warehouses with Medallion Architecture (Bronze/Silver/Gold)
 - Needs data lineage tracking, ETL patterns, or audit logging
 - Reviews database code for best practices or anti-patterns
@@ -172,7 +172,7 @@ SET search_path = data, private, pg_temp
 
 ```sql
 CREATE TABLE data.{table_name} (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     -- columns...
     created_at      timestamptz NOT NULL DEFAULT now(),
     updated_at      timestamptz NOT NULL DEFAULT now()
@@ -273,7 +273,7 @@ SELECT app_migration.release_lock();
 | `numeric(p,s)` | `money`, `float` |
 | `timestamptz` | `timestamp` |
 | `boolean` | `integer` flags |
-| `uuidv7()` | `serial`, `uuid_generate_v4()` |
+| `gen_random_uuid()`, `uuidv7()` when available, or `GENERATED ALWAYS AS IDENTITY` | `serial`, `uuid_generate_v4()` |
 | `GENERATED ALWAYS AS IDENTITY` | `serial`, `bigserial` |
 | `jsonb` | `json`, EAV pattern |
 
@@ -294,15 +294,15 @@ SELECT app_migration.release_lock();
 
 ---
 
-## PostgreSQL 18+ Features
+## Version-Specific PostgreSQL Features
 
-| Feature | Usage |
-|---------|-------|
-| `uuidv7()` | `id uuid DEFAULT uuidv7()` - timestamp-ordered UUIDs |
-| Virtual generated columns | `col type GENERATED ALWAYS AS (expr)` - computed at query time |
-| `OLD`/`NEW` in RETURNING | `UPDATE ... RETURNING OLD.col, NEW.col` |
-| Temporal constraints | `PRIMARY KEY (id) WITHOUT OVERLAPS` |
-| `NOT VALID` constraints | Add constraints without full table scan |
+| Feature | Version | Usage |
+|---------|---------|-------|
+| `uuidv7()` | PostgreSQL 18+ | `id uuid DEFAULT uuidv7()` - timestamp-ordered UUIDs |
+| Virtual generated columns | PostgreSQL 18+ | `col type GENERATED ALWAYS AS (expr)` - computed at query time |
+| `OLD`/`NEW` in RETURNING | PostgreSQL 18+ | `UPDATE ... RETURNING OLD.col, NEW.col` |
+| Temporal constraints | PostgreSQL 18+ | `PRIMARY KEY (id, valid_during WITHOUT OVERLAPS)` |
+| `NOT VALID` constraints | Version-dependent | Add constraints without full table scan where supported |
 
 ---
 

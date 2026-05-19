@@ -113,7 +113,7 @@ $$;
 
 -- Tables with tenant_id
 CREATE TABLE data.customers (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     tenant_id   uuid NOT NULL,
     email       text NOT NULL,
     name        text NOT NULL,
@@ -177,7 +177,7 @@ $$;
 ```sql
 -- Tenant table with hierarchy
 CREATE TABLE data.tenants (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     parent_id   uuid REFERENCES data.tenants(id),
     name        text NOT NULL,
     is_active   boolean NOT NULL DEFAULT true
@@ -213,7 +213,7 @@ CREATE POLICY tenant_hierarchy ON data.orders
 
 ```sql
 CREATE TABLE data.documents (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     owner_id    uuid NOT NULL REFERENCES data.users(id),
     title       text NOT NULL,
     content     text,
@@ -249,7 +249,7 @@ CREATE POLICY public_read ON data.documents
 ```sql
 -- Users table with role
 CREATE TABLE data.users (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     tenant_id   uuid NOT NULL,
     email       text NOT NULL,
     role        text NOT NULL DEFAULT 'user',  -- 'admin', 'manager', 'user'
@@ -463,7 +463,7 @@ $$;
 ```sql
 -- Documents with expiration
 CREATE TABLE data.shared_links (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     document_id uuid NOT NULL REFERENCES data.documents(id),
     token       text NOT NULL UNIQUE,
     expires_at  timestamptz NOT NULL,

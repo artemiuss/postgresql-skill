@@ -22,15 +22,15 @@ BEGIN
     RAISE NOTICE '';
     RAISE NOTICE 'PostgreSQL version: %', l_version_str;
 
-    -- Check minimum version (PostgreSQL 18+)
-    IF l_version < 180000 THEN
-        RAISE NOTICE '  WARNING: PostgreSQL 18+ recommended (current: %)', l_version_str;
+    -- Check minimum version (PostgreSQL 14+)
+    IF l_version < 140000 THEN
+        RAISE NOTICE '  WARNING: PostgreSQL 14+ recommended (current: %)', l_version_str;
         RAISE NOTICE '  Some tests may fail on older versions';
     ELSE
-        RAISE NOTICE '  OK: PostgreSQL 18+ detected';
+        RAISE NOTICE '  OK: PostgreSQL 14+ compatible version detected';
     END IF;
 
-    -- Check for uuidv7 function (PG17+)
+    -- Check for uuidv7 function where available
     SELECT EXISTS (
         SELECT 1 FROM pg_proc WHERE proname = 'uuidv7'
     ) INTO l_has_uuidv7;
@@ -38,7 +38,7 @@ BEGIN
     IF l_has_uuidv7 THEN
         RAISE NOTICE '  OK: uuidv7() function available';
     ELSE
-        RAISE NOTICE '  WARNING: uuidv7() not available (PG17+ feature)';
+        RAISE NOTICE '  WARNING: uuidv7() not available';
         RAISE NOTICE '  UUID tests will use gen_random_uuid() fallback';
     END IF;
 

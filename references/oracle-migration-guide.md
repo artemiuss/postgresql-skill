@@ -484,7 +484,7 @@ SELECT nextval('data.emp_seq');
 
 -- PostgreSQL: UUID (often better than sequences)
 CREATE TABLE data.employees (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name text NOT NULL
 );
 ```

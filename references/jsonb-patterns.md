@@ -62,7 +62,7 @@ flowchart TD
 ```sql
 -- Separate tables for product attributes
 CREATE TABLE data.products (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name        text NOT NULL,
     price       numeric(10,2) NOT NULL,
     created_at  timestamptz NOT NULL DEFAULT now()
@@ -87,7 +87,7 @@ WHERE pa.key = 'color' AND pa.value = 'red';
 ```sql
 -- Single table with JSONB attributes
 CREATE TABLE data.products (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name        text NOT NULL,
     price       numeric(10,2) NOT NULL,
     attributes  jsonb NOT NULL DEFAULT '{}',
@@ -121,7 +121,7 @@ WHERE attributes @> '{"color": "red"}';
 ```sql
 -- Core fields as columns, flexible data as JSONB
 CREATE TABLE data.orders (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     customer_id     uuid NOT NULL REFERENCES data.customers(id),
     status          text NOT NULL DEFAULT 'pending',
     total           numeric(10,2) NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE data.orders (
 
 ```sql
 CREATE TABLE data.events (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     event_type  text NOT NULL,
     entity_type text NOT NULL,
     entity_id   uuid NOT NULL,
@@ -487,7 +487,7 @@ CREATE EXTENSION IF NOT EXISTS pg_jsonschema;
 
 -- Define schema
 CREATE TABLE data.form_schemas (
-    id      uuid PRIMARY KEY DEFAULT uuidv7(),
+    id      uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name    text NOT NULL UNIQUE,
     schema  jsonb NOT NULL
 );
@@ -752,7 +752,7 @@ d Design (Relational)
 ```sql
 -- Separate tables for structured data
 CREATE TABLE data.products (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name        text NOT NULL,
     price       numeric(10,2) NOT NULL,
     category_id uuid REFERENCES data.categories(id),
@@ -778,7 +778,7 @@ WHERE pa.name = 'color' AND pa.value = 'red';
 ```sql
 -- Single table with flexible attributes
 CREATE TABLE data.products (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name        text NOT NULL,
     price       numeric(10,2) NOT NULL,
     category_id uuid REFERENCES data.categories(id),
@@ -800,7 +800,7 @@ WHERE attributes @> '{"color": "red"}';
 ```sql
 -- Core fields as columns, extras as JSONB
 CREATE TABLE data.products (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     
     -- Frequently queried: columns
     name        text NOT NULL,
@@ -831,7 +831,7 @@ CREATE INDEX products_color ON data.products(color) WHERE color IS NOT NULL;
 
 ```sql
 CREATE TABLE data.events (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     event_type  text NOT NULL,
     entity_type text NOT NULL,
     entity_id   uuid NOT NULL,
@@ -894,7 +894,7 @@ $$;
 
 ```sql
 CREATE TABLE data.form_submissions (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     form_id     uuid NOT NULL REFERENCES data.forms(id),
     submitter_id uuid,
     data        jsonb NOT NULL,

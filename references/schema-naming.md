@@ -88,10 +88,10 @@ CREATE TABLE data.roles_users (
 ### Primary Keys
 ```sql
 -- Option 1: Simple 'id' (preferred for most cases)
-id uuid PRIMARY KEY DEFAULT uuidv7()
+id uuid PRIMARY KEY DEFAULT gen_random_uuid()
 
 -- Option 2: Table-prefixed (for clarity in complex joins)
-order_id uuid PRIMARY KEY DEFAULT uuidv7()
+order_id uuid PRIMARY KEY DEFAULT gen_random_uuid()
 ```
 
 ### Foreign Keys

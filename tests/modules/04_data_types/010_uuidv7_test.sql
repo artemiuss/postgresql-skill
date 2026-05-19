@@ -8,7 +8,7 @@
 -- TEST FUNCTIONS
 -- ============================================================================
 
--- Test: uuidv7() function exists (PG17+)
+-- Test: uuidv7() function exists where available
 CREATE OR REPLACE FUNCTION test.test_uuid_010_uuidv7_exists()
 RETURNS void
 LANGUAGE plpgsql
@@ -23,7 +23,7 @@ BEGIN
     IF l_has_uuidv7 THEN
         PERFORM test.ok(true, 'uuidv7() function exists');
     ELSE
-        PERFORM test.skip(1, 'uuidv7() not available (requires PG17+)');
+        PERFORM test.skip(1, 'uuidv7() not available');
     END IF;
 END;
 $$;
@@ -42,7 +42,7 @@ BEGIN
     SELECT EXISTS (SELECT 1 FROM pg_proc WHERE proname = 'uuidv7') INTO l_has_uuidv7;
 
     IF l_has_uuidv7 THEN
-        l_uuid := uuidv7();
+        EXECUTE 'SELECT uuidv7()' INTO l_uuid;
         PERFORM test.is_not_null(l_uuid, 'uuidv7() should generate non-null UUID');
         PERFORM test.is(length(l_uuid::text), 36, 'UUID should be 36 characters with hyphens');
     ELSE
@@ -66,7 +66,7 @@ BEGIN
     SELECT EXISTS (SELECT 1 FROM pg_proc WHERE proname = 'uuidv7') INTO l_has_uuidv7;
 
     IF l_has_uuidv7 THEN
-        l_uuid := uuidv7();
+        EXECUTE 'SELECT uuidv7()' INTO l_uuid;
         -- UUID format: xxxxxxxx-xxxx-Vxxx-xxxx-xxxxxxxxxxxx (V is version)
         -- Position 15 (1-indexed in the string) is the version
         l_version_char := substring(l_uuid::text from 15 for 1);
@@ -92,7 +92,7 @@ BEGIN
     SELECT EXISTS (SELECT 1 FROM pg_proc WHERE proname = 'uuidv7') INTO l_has_uuidv7;
 
     IF l_has_uuidv7 THEN
-        l_uuid := uuidv7();
+        EXECUTE 'SELECT uuidv7()' INTO l_uuid;
         -- Variant bits are in position 20 (after third hyphen)
         -- Should be 8, 9, a, or b for RFC 4122 variant
         l_variant_char := substring(l_uuid::text from 20 for 1);
@@ -123,11 +123,11 @@ BEGIN
 
     IF l_has_uuidv7 THEN
         -- Generate UUIDs with small delays
-        l_uuid1 := uuidv7();
+        EXECUTE 'SELECT uuidv7()' INTO l_uuid1;
         PERFORM pg_sleep(0.001);
-        l_uuid2 := uuidv7();
+        EXECUTE 'SELECT uuidv7()' INTO l_uuid2;
         PERFORM pg_sleep(0.001);
-        l_uuid3 := uuidv7();
+        EXECUTE 'SELECT uuidv7()' INTO l_uuid3;
 
         -- When sorted, they should maintain order
         PERFORM test.ok(l_uuid1 < l_uuid2, 'uuid1 should be less than uuid2');
@@ -192,7 +192,7 @@ BEGIN
     SELECT EXISTS (SELECT 1 FROM pg_proc WHERE proname = 'uuidv7') INTO l_has_uuidv7;
 
     IF l_has_uuidv7 THEN
-        l_v7_uuid := uuidv7();
+        EXECUTE 'SELECT uuidv7()' INTO l_v7_uuid;
         l_v4_uuid := gen_random_uuid();
 
         PERFORM test.ok(test.is_uuidv7(l_v7_uuid), 'is_uuidv7 should return true for v7 UUID');

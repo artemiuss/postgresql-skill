@@ -4,7 +4,7 @@ Comprehensive test suite for validating the PostgreSQL Best Practices Claude Ski
 
 ## Prerequisites
 
-- **PostgreSQL 18+** (recommended) or PostgreSQL 14+ (minimum)
+- **PostgreSQL 14+** minimum; newer releases enable additional feature-specific tests
 - `psql` command-line client
 - Database with admin/superuser privileges
 - Bash shell (for running scripts)

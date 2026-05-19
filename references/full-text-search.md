@@ -99,7 +99,7 @@ SELECT to_tsvector('english', 'The quick brown fox')
 ```sql
 -- Store precomputed tsvector as generated column
 CREATE TABLE data.articles (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     title           text NOT NULL,
     body            text NOT NULL,
     author_id       uuid NOT NULL REFERENCES data.users(id),
@@ -123,7 +123,7 @@ CREATE INDEX articles_search_idx ON data.articles USING gin(search_vector);
 ```sql
 -- For more complex logic or PostgreSQL < 12
 CREATE TABLE data.products (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name            text NOT NULL,
     description     text,
     category        text NOT NULL,
@@ -164,7 +164,7 @@ CREATE INDEX products_search_idx ON data.products USING gin(search_vector);
 -- No stored vector - compute at query time
 -- Only suitable for small tables or infrequent searches
 CREATE TABLE data.notes (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     content     text NOT NULL,
     user_id     uuid NOT NULL,
     created_at  timestamptz NOT NULL DEFAULT now()
@@ -456,7 +456,7 @@ SHOW default_text_search_config;
 ```sql
 -- Create table with language column
 CREATE TABLE data.content (
-    id          uuid PRIMARY KEY DEFAULT uuidv7(),
+    id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     title       text NOT NULL,
     body        text NOT NULL,
     language    text NOT NULL DEFAULT 'english',

@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Purpose
 
-This is a **Claude Code Skill** for PostgreSQL 18+ production engineering.
+This is a **Claude Code Skill** for PostgreSQL production engineering.
+
+Keep default guidance version-aware: prefer broadly supported PostgreSQL patterns first, and present newer PostgreSQL 18 capabilities as optional version-specific upgrades.
 
 **Structure:**
 - `SKILL.md` - Main skill file (frontmatter + core patterns)
@@ -58,7 +60,7 @@ Note: PostgreSQL procedures only support INOUT parameters, not OUT.
 **Table creation:**
 ```sql
 CREATE TABLE data.{table} (
-    id uuid PRIMARY KEY DEFAULT uuidv7(),
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     ...
     created_at timestamptz NOT NULL DEFAULT now(),
     updated_at timestamptz NOT NULL DEFAULT now()
@@ -85,7 +87,7 @@ LANGUAGE plpgsql SECURITY DEFINER SET search_path = data, private, pg_temp
 | `text` | `char(n)`, `varchar(n)` |
 | `timestamptz` | `timestamp` |
 | `numeric(p,s)` | `money`, `float` |
-| `uuidv7()` | `serial`, `uuid_generate_v4()` |
+| `gen_random_uuid()`; `uuidv7()` on PostgreSQL 18+ when UUID primary keys are required; `GENERATED ALWAYS AS IDENTITY` | `serial`, `uuid_generate_v4()` |
 | `GENERATED ALWAYS AS IDENTITY` | `serial`, `bigserial` |
 
 ## Migration System

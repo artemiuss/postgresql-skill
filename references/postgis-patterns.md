@@ -101,14 +101,14 @@ VALUES (900913, 'EPSG', 900913, 'WGS 84 / Pseudo-Mercator', '+proj=merc...');
 
 -- Geometry column (flat earth math)
 CREATE TABLE data.buildings (
-    id      uuid PRIMARY KEY DEFAULT uuidv7(),
+    id      uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name    text NOT NULL,
     location geometry(Point, 4326)  -- 2D point in WGS84
 );
 
 -- Geography column (spherical earth math)
 CREATE TABLE data.cities (
-    id      uuid PRIMARY KEY DEFAULT uuidv7(),
+    id      uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name    text NOT NULL,
     location geography(Point, 4326)  -- Accurate global distances
 );
@@ -144,7 +144,7 @@ SELECT ST_GeomFromText('GEOMETRYCOLLECTION(POINT(-122.4 37.7), LINESTRING(-122.4
 
 ```sql
 CREATE TABLE data.locations (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name            text NOT NULL,
     address         text,
 
@@ -171,7 +171,7 @@ CREATE INDEX locations_lon_idx ON data.locations (longitude);
 
 ```sql
 CREATE TABLE data.regions (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name            text NOT NULL,
     region_type     text NOT NULL,  -- 'city', 'state', 'country', 'custom'
 
@@ -193,7 +193,7 @@ CREATE INDEX regions_boundary_idx ON data.regions USING gist (boundary);
 
 ```sql
 CREATE TABLE data.pois (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name            text NOT NULL,
     category        text NOT NULL,
     location        geography(Point, 4326) NOT NULL,
@@ -509,7 +509,7 @@ SELECT ST_AsGeoJSON(
 
 ```sql
 CREATE TABLE data.routes (
-    id              uuid PRIMARY KEY DEFAULT uuidv7(),
+    id              uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     name            text NOT NULL,
     path            geography(LineString, 4326) NOT NULL,
     length_km       double precision GENERATED ALWAYS AS (

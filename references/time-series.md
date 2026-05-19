@@ -42,7 +42,7 @@ This document covers time-series data optimization in native PostgreSQL, includi
 
 ```sql
 CREATE TABLE data.metrics (
-    id              uuid DEFAULT uuidv7(),
+    id              uuid DEFAULT gen_random_uuid(),
     device_id       uuid NOT NULL,
     metric_name     text NOT NULL,
     value           double precision NOT NULL,
@@ -61,7 +61,7 @@ COMMENT ON TABLE data.metrics IS 'Time-series metrics data, partitioned by month
 ```sql
 -- Wide table: one row per timestamp with multiple values
 CREATE TABLE data.sensor_readings (
-    id              uuid DEFAULT uuidv7(),
+    id              uuid DEFAULT gen_random_uuid(),
     sensor_id       uuid NOT NULL,
     recorded_at     timestamptz NOT NULL DEFAULT now(),
 
@@ -80,7 +80,7 @@ CREATE TABLE data.sensor_readings (
 ```sql
 -- Narrow table: one row per metric per timestamp
 CREATE TABLE data.measurements (
-    id              uuid DEFAULT uuidv7(),
+    id              uuid DEFAULT gen_random_uuid(),
     entity_id       uuid NOT NULL,
     metric_name     text NOT NULL,
     recorded_at     timestamptz NOT NULL DEFAULT now(),
@@ -109,7 +109,7 @@ CREATE TABLE data.events (
     metadata        jsonb DEFAULT '{}',
 
     -- Primary key last (for TOAST ordering)
-    id              uuid DEFAULT uuidv7(),
+    id              uuid DEFAULT gen_random_uuid(),
 
     PRIMARY KEY (recorded_at, device_id, id)
 ) WITH (fillfactor = 90);  -- Allow for some updates
@@ -122,7 +122,7 @@ CREATE TABLE data.events (
 ```sql
 -- Create partitioned table
 CREATE TABLE data.events (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     event_type      text NOT NULL,
     device_id       uuid NOT NULL,
     value           double precision,
@@ -147,7 +147,7 @@ CREATE TABLE data.events_default PARTITION OF data.events DEFAULT;
 ```sql
 -- For very high volume data
 CREATE TABLE data.logs (
-    id              uuid NOT NULL DEFAULT uuidv7(),
+    id              uuid NOT NULL DEFAULT gen_random_uuid(),
     level           text NOT NULL,
     message         text NOT NULL,
     recorded_at     timestamptz NOT NULL DEFAULT now(),

@@ -17,7 +17,7 @@ Quick reference checklists for common tasks and solutions to common problems.
 ## Checklist: New Table
 
 - [ ] Create table in `data` schema
-- [ ] Use `uuidv7()` or `GENERATED ALWAYS AS IDENTITY` for primary key
+- [ ] Use a version-appropriate primary key default: `gen_random_uuid()`, `uuidv7()` where available, or `GENERATED ALWAYS AS IDENTITY`
 - [ ] Add `created_at timestamptz NOT NULL DEFAULT now()`
 - [ ] Add `updated_at timestamptz NOT NULL DEFAULT now()`
 - [ ] Apply `private.set_updated_at()` trigger
@@ -125,10 +125,10 @@ ALTER TABLE data.my_table ENABLE TRIGGER my_trigger;
 
 ### UUID vs IDENTITY confusion
 
-**Use UUIDv7 when**:
+**Use UUIDs when**:
 - Distributed systems (no coordination needed)
 - URLs/external references (no sequence guessing)
-- Time-ordered sorting needed
+- Time-ordered sorting needed (`uuidv7()` where available)
 
 **Use IDENTITY when**:
 - Internal IDs only

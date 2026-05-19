@@ -1,6 +1,8 @@
 # PostgreSQL Skill
 
-A merged PostgreSQL skill repository for building and operating PostgreSQL 18+ systems.
+A merged PostgreSQL skill repository for building and operating production PostgreSQL systems.
+
+Default examples should stay compatible with broadly supported PostgreSQL releases. Newer features, including PostgreSQL 18 capabilities, are documented as version-specific options rather than repository-wide requirements.
 
 This repository keeps `artemiuss/postgresql-best-practices` as the base and adds a small set of low-level Postgres operations references from a secondary source repository. The result is a broader skill: application-facing database engineering plus the internals needed to debug production behavior.
 
