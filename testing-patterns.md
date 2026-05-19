@@ -906,7 +906,6 @@ jobs:
           PGPASSWORD: test
           PGDATABASE: test_db
         run: |
-          psql -f db/tests/install_tests.sql
           psql -c "SELECT * FROM test.run_all_tests();" | tee test_results.txt
           
       - name: Check for failures
@@ -931,15 +930,14 @@ RUN apt-get update && apt-get install -y \
 # Copy initialization scripts
 COPY db/scripts/*.sql /docker-entrypoint-initdb.d/01-scripts/
 COPY db/migrations/*.sql /docker-entrypoint-initdb.d/02-migrations/
-COPY db/tests/*.sql /docker-entrypoint-initdb.d/03-tests/
 
 # Copy test runner
-COPY db/tests/run_tests.sh /docker-entrypoint-initdb.d/99-run-tests.sh
+COPY scripts/run-db-tests.sh /docker-entrypoint-initdb.d/99-run-tests.sh
 ```
 
 ```bash
 #!/bin/bash
-# db/tests/run_tests.sh
+# scripts/run-db-tests.sh
 
 set -e
 

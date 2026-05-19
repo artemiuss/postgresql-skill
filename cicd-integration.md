@@ -99,7 +99,6 @@ jobs:
           PGPASSWORD: ${{ env.POSTGRES_PASSWORD }}
           PGDATABASE: ${{ env.POSTGRES_DB }}
         run: |
-          psql -f db/tests/install_tests.sql
           psql -c "SELECT * FROM test.run_all_tests();" | tee test_results.txt
           
       - name: Check test results
@@ -308,7 +307,6 @@ test-migrations:
     - psql -f db/scripts/001_install_migration_system.sql
     - psql -f db/scripts/002_migration_runner_helpers.sql
     - for f in db/migrations/V*.sql; do psql -f "$f"; done
-    - psql -f db/tests/install_tests.sql
     - psql -c "SELECT * FROM test.run_all_tests();" | tee test_results.txt
     - "! grep -q 'FAIL\\|ERROR' test_results.txt"
   artifacts:
@@ -371,7 +369,6 @@ RUN apt-get update && apt-get install -y \
 COPY db/scripts/*.sql /docker-entrypoint-initdb.d/00-scripts/
 COPY db/migrations/V*.sql /docker-entrypoint-initdb.d/01-versioned/
 COPY db/migrations/R__*.sql /docker-entrypoint-initdb.d/02-repeatable/
-COPY db/tests/*.sql /docker-entrypoint-initdb.d/03-tests/
 
 # Copy test runner
 COPY scripts/run-db-tests.sh /docker-entrypoint-initdb.d/99-run-tests.sh
@@ -498,9 +495,6 @@ for f in /db/migrations/R__*.sql; do
         psql -f "$f"
     fi
 done
-
-echo "=== Installing tests ==="
-psql -f /db/tests/install_tests.sql
 
 echo "=== Running tests ==="
 RESULTS=$(psql -t -c "SELECT * FROM test.run_all_tests();")

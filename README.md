@@ -40,7 +40,6 @@ Taken from the base repository:
 
 - `SKILL.md`
 - Markdown reference documents, now stored at the skill root
-- `tests/` directory
 
 ### Imported Operations References
 
@@ -73,8 +72,7 @@ Only generic Postgres operations and internals material was imported. Provider-s
 postgresql-skill/
 ├── SKILL.md
 ├── README.md
-├── *.md                         # root-level reference docs
-└── tests/                       # inherited PL/pgSQL test suite
+└── *.md                         # root-level reference docs
 ```
 
 ## Attribution and Licensing
@@ -83,5 +81,4 @@ postgresql-skill/
 
 ## Notes
 
-- The test suite is inherited from the base repository and primarily validates the original `artemiuss` patterns
 - The imported ops/internals references are documentation-only additions; they do not currently add new automated tests
