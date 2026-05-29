@@ -62,7 +62,7 @@ Only generic Postgres operations and internals material was imported. Provider-s
 - Renamed the skill to `postgresql-skill`
 - Expanded the `SKILL.md` trigger/usage text to include runtime troubleshooting and incident analysis
 - Added a dedicated `Operations Internals` section in `SKILL.md`
-- Moved reference documents from `references/` to the skill root
+- Moved reference documents to `references/` to follow the Agent Skills standard
 - Removed the top-level SQL helper scripts from the packaged skill
 - Added source provenance and third-party attribution for the imported documents
 
@@ -72,7 +72,8 @@ Only generic Postgres operations and internals material was imported. Provider-s
 postgresql-skill/
 ├── SKILL.md
 ├── README.md
-└── *.md                         # root-level reference docs
+└── references/                  # reference docs
+    └── *.md
 ```
 
 ## Attribution and Licensing
